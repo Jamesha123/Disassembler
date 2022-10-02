@@ -36,15 +36,16 @@ func processInput(list []Instruction) {
 		switch list[i].typeofInstruction {
 		case "R":
 			RTypeFormat(&list[i])
-		case "D":
-
+		case "D":			
+			DTypeFormat(&list[i])
 		case "I":
-
+			ITypeFormat(&list[i])
 		case "B":
-
-		case "CB":
-
+			BTypeFormat(&list[i])
+		case "CB":						// commenting these out until we complete the functions for them
+			// CBTypeFormat(&list[i])
 		case "IM":
+			// IMTypeFormat(&list[i])
 		}
 	}
 }
@@ -205,31 +206,47 @@ func writeInstruction(filePath string, list []Instruction) {
 */
 func RTypeFormat(ins *Instruction) {
 
-	// bits 12-16
+	// bits 12 - 16
 	ins.rm = uint8((ins.linevalue & 2031616) >> 16)
-	// bits 17-22
+	// bits 17 - 22
 	ins.shamt = uint8((ins.linevalue & 64512) >> 10)
-	// bits 23-27
+	// bits 23 - 27
 	ins.rn = uint8((ins.linevalue & 992) >> 5)
-	// bits 28-32
+	// bits 28 - 32
 	ins.rd = uint8(ins.linevalue & 31)
 
 }
 
 func DTypeFormat(ins *Instruction) {
-	// TO DO
+	// bits 12 - 20
+	ins.address = uint8((ins.linevalue &  2093056) >> 12)
+	// bits 21 - 22
+	ins.op = uint8((ins.linevalue & 3072) >> 10)
+	// bits 23 - 27
+	ins.rn = uint8((ins.linevalue & 992) >> 5)
+	// bits 28 - 32
+	ins.rt = uint8(ins.linevalue & 31) 
 }
 
 func ITypeFormat(ins *Instruction) {
-	// TO DO
+	// bits 11 - 22
+	ins.immediate = uint8((ins.linevalue & 4193280) >> 10)
+	// bits 23 - 27
+	ins.rn = uint8((ins.linevalue & 992) >> 5)
+	// bits 28 -32
+	ins.rd = uint8(ins.linevalue & 31) 
 }
 
 func BTypeFormat(ins *Instruction) {
-	// TO DO
+	// bits 7 - 32
+	ins.offset = uint8(ins.linevalue & 67108863)
 }
 
 func CBTypeFormat(ins *Instruction) {
-	// TO DO
+	// bits 9 - 27
+	ins.offset = uint8((ins.linevalue & 16777184) >> 5)
+	// bits 28 - 32
+	ins.conditional = uint8(ins.linevalue & 31)
 }
 
 func IMTypeFormat(ins *Instruction) {
