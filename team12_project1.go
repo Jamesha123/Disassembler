@@ -43,7 +43,7 @@ func processInput(list []Instruction) {
 		case "B":
 			BTypeFormat(&list[i])
 		case "CB":						// commenting these out until we complete the functions for them
-			// CBTypeFormat(&list[i])
+			CBTypeFormat(&list[i])
 		case "IM":
 			// IMTypeFormat(&list[i])
 		}
