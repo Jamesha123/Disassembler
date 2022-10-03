@@ -342,7 +342,7 @@ func ITypeFormat(ins *Instruction) {
 
 func BTypeFormat(ins *Instruction) {
 	// bits 7 - 32
-	ins.offset = int32(TwoComplement((ins.linevalue & 67108863), 21))
+	ins.offset = int32(TwoComplement((ins.linevalue & 67108863), 26))
 }
 
 func CBTypeFormat(ins *Instruction) {
@@ -362,6 +362,7 @@ func IMTypeFormat(ins *Instruction) {
 }
 
 func Break(ins *Instruction) {
+	// bits 11 - 32
 	ins.brk = uint32(ins.linevalue & 2031591)
 	Breaknow = true
 }
