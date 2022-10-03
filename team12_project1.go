@@ -2,10 +2,12 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	//"testing/quick"
 )
 
 type Instruction struct {
@@ -15,11 +17,21 @@ type Instruction struct {
 	programCnt        int
 	opcode            uint64
 	op                string
+	op2               uint8
 	rd                uint8
 	rn                uint8
 	rm                uint8
+	rt                uint8
 	shamt             uint8
 	im                string
+	immediate         int16
+	offset            int32
+	conditional       uint8
+	address           uint16
+	shiftCode         uint8
+	field             uint32
+	brk               uint32
+	bitValue          int64
 }
 
 /*
@@ -28,24 +40,30 @@ type Instruction struct {
 *************************************
 */
 func processInput(list []Instruction) {
-	for i := 0; i < len(list); i++ {
 
+	for i := 0; i < len(list); i++ {
 		convertToInt(&list[i])
 		opcodeMasking(&list[i])
 		opcodeMatching(&list[i])
 		switch list[i].typeofInstruction {
 		case "R":
 			RTypeFormat(&list[i])
-		case "D":			
+		case "D":
 			DTypeFormat(&list[i])
 		case "I":
 			ITypeFormat(&list[i])
 		case "B":
 			BTypeFormat(&list[i])
-		case "CB":						// commenting these out until we complete the functions for them
+		case "CB":
 			CBTypeFormat(&list[i])
 		case "IM":
-			// IMTypeFormat(&list[i])
+			IMTypeFormat(&list[i])
+		case "BREAK":
+			Break(&list[i])
+		case "NUM":
+			var val uint64
+			val, _ = strconv.ParseUint(list[i].rawInstruction, 2, 32)
+			list[i].bitValue = TwoComplement(val, 32)
 		}
 	}
 }
@@ -71,6 +89,7 @@ func convertToInt(ins *Instruction) {
 func opcodeMatching(ins *Instruction) {
 	if ins.opcode >= 160 && ins.opcode <= 191 {
 		ins.op = "B"
+		ins.typeofInstruction = "B"
 	} else if ins.opcode == 1104 {
 		ins.op = "AND"
 		ins.typeofInstruction = "R"
@@ -118,12 +137,15 @@ func opcodeMatching(ins *Instruction) {
 		ins.typeofInstruction = "R"
 	} else if ins.opcode == 0 {
 		ins.op = "NOP"
+		ins.typeofInstruction = "NOP"
 	} else if ins.opcode == 1872 {
 		ins.op = "EOR"
 		ins.typeofInstruction = "R"
 	} else if ins.opcode == 2038 {
 		ins.op = "Break"
+		ins.typeofInstruction = "BREAK"
 	} else {
+		ins.typeofInstruction = "NUM"
 		fmt.Println("Invalid opcode")
 	}
 }
@@ -186,17 +208,98 @@ func writeInstruction(filePath string, list []Instruction) {
 			}
 
 		case "D":
-			// TO DO
+			_, err := fmt.Fprintf(f, "%s %s %s %s %s\t", list[i].rawInstruction[0:11],
+				list[i].rawInstruction[11:20], list[i].rawInstruction[20:22],
+				list[i].rawInstruction[22:27], list[i].rawInstruction[27:32])
+
+			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+
+			_, err = fmt.Fprintf(f, "R%d, [R%d,#%d]\n", list[i].rt, list[i].rn, list[i].address)
+			if err != nil {
+				log.Fatal(err)
+			}
+
 		case "I":
-			// TO DO
+			_, err := fmt.Fprintf(f, "%s %s %s %s\t", list[i].rawInstruction[0:10],
+				list[i].rawInstruction[10:22], list[i].rawInstruction[22:27],
+				list[i].rawInstruction[27:32])
+
+			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+
+			_, err = fmt.Fprintf(f, "R%d, R%d, #%d\n", list[i].rd, list[i].rn, list[i].immediate)
+			if err != nil {
+				log.Fatal(err)
+			}
 		case "B":
-			// TO DO
+			_, err := fmt.Fprintf(f, "%s %s\t", list[i].rawInstruction[0:6],
+				list[i].rawInstruction[6:32])
+
+			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+
+			_, err = fmt.Fprintf(f, "#%d\n", list[i].offset)
+			if err != nil {
+				log.Fatal(err)
+			}
 		case "CB":
-			// TO DO
+			_, err := fmt.Fprintf(f, "%s %s %s\t", list[i].rawInstruction[0:8],
+				list[i].rawInstruction[8:27], list[i].rawInstruction[27:32])
+
+			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+
+			_, err = fmt.Fprintf(f, "R%d #%d\n", list[i].conditional, list[i].offset)
+			if err != nil {
+				log.Fatal(err)
+			}
 		case "IM":
-			// TO DO
+			_, err := fmt.Fprintf(f, "%s %s %s %s\t", list[i].rawInstruction[0:9],
+				list[i].rawInstruction[9:11], list[i].rawInstruction[11:27],
+				list[i].rawInstruction[27:32])
+
+			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+
+			_, err = fmt.Fprintf(f, "R%d, %d, LSL %d\n", list[i].rd, list[i].field, list[i].shiftCode)
+			if err != nil {
+				log.Fatal(err)
+			}
+		case "BREAK":
+			_, err = fmt.Fprintf(f, "%s %d Break\n", list[i].rawInstruction, list[i].programCnt)
+			if err != nil {
+				log.Fatal(err)
+			}
+		case "NOP":
+			_, err = fmt.Fprintf(f, "%s %d No Instruction\n", list[i].rawInstruction, list[i].programCnt)
+			if err != nil {
+				log.Fatal(err)
+			}
+		case "NUM":
+			_, err = fmt.Fprintf(f, "%s %d %d\n", list[i].rawInstruction, list[i].programCnt, list[i].bitValue)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
+}
+
+func TwoComplement(i uint64, bitLength uint) int64 {
+	//var n int64
+	// for i, v := range bitLength {
+	// 	shift := uint((len(bitLength) - i - 1) * 8)
+	// 	if i == 0 && v&0x80 != 0 {
+	// 		n -= 0x80 << shift
+	// 		v &= 0x7f
+	// 	}
+	// 	n += int64(v) << shift
+	// }
+	//return n
+
+	var n int64
+	var v int64
+	n = int64(i)
+	v = (1 << bitLength) - 1
+	if (i >> (bitLength - 1)) != 0 {
+		n = ((n ^ v) + 1) * -1
+	}
+	return n
 }
 
 /*
@@ -219,38 +322,48 @@ func RTypeFormat(ins *Instruction) {
 
 func DTypeFormat(ins *Instruction) {
 	// bits 12 - 20
-	ins.address = uint8((ins.linevalue &  2093056) >> 12)
+	ins.address = uint16((ins.linevalue & 2093056) >> 12)
 	// bits 21 - 22
-	ins.op = uint8((ins.linevalue & 3072) >> 10)
+	ins.op2 = uint8((ins.linevalue & 3072) >> 10)
 	// bits 23 - 27
 	ins.rn = uint8((ins.linevalue & 992) >> 5)
 	// bits 28 - 32
-	ins.rt = uint8(ins.linevalue & 31) 
+	ins.rt = uint8(ins.linevalue & 31)
 }
 
 func ITypeFormat(ins *Instruction) {
 	// bits 11 - 22
-	ins.immediate = uint8((ins.linevalue & 4193280) >> 10)
+	ins.immediate = int16(TwoComplement((ins.linevalue&4193280)>>10, 12))
 	// bits 23 - 27
 	ins.rn = uint8((ins.linevalue & 992) >> 5)
 	// bits 28 -32
-	ins.rd = uint8(ins.linevalue & 31) 
+	ins.rd = uint8(ins.linevalue & 31)
 }
 
 func BTypeFormat(ins *Instruction) {
 	// bits 7 - 32
-	ins.offset = uint8(ins.linevalue & 67108863)
+	ins.offset = int32(TwoComplement((ins.linevalue & 67108863), 21))
 }
 
 func CBTypeFormat(ins *Instruction) {
 	// bits 9 - 27
-	ins.offset = uint8((ins.linevalue & 16777184) >> 5)
+	ins.offset = int32(TwoComplement((ins.linevalue&16777184)>>5, 19))
 	// bits 28 - 32
 	ins.conditional = uint8(ins.linevalue & 31)
 }
 
 func IMTypeFormat(ins *Instruction) {
-	// TO DO
+	// bits 10-11
+	ins.shiftCode = uint8((ins.linevalue & 6291456) >> 21)
+	// bits 12 - 27
+	ins.field = uint32((ins.linevalue & 2097120) >> 5)
+	// bits 28 - 32
+	ins.rd = uint8((ins.linevalue & 31))
+}
+
+func Break(ins *Instruction) {
+	ins.brk = uint32(ins.linevalue & 2031591)
+	Breaknow = true
 }
 
 /*
@@ -260,13 +373,22 @@ func IMTypeFormat(ins *Instruction) {
 */
 
 var InputParsed []Instruction
+var Breaknow bool = false
+var InputFileName *string
+var OutputFileName *string
 
 func main() {
 
-	os.Args[0] = "addtest1_bin.txt"
+	InputFileName := flag.String("i", "dtest2_bin.txt", "Gets the input file name")
+	OutputFileName := flag.String("o", "team12_addtest1_out.dis.txt", "Gets the output file name")
 
-	readInstruction(os.Args[0])
+	flag.Parse()
+
+	//os.Args[0] = "addtest1_bin.txt"
+	//os.Args[0] = "dtest2_bin.txt"
+
+	readInstruction(*InputFileName)
 	processInput(InputParsed)
-	writeInstruction("team12_addtest1_out.dis.txt", InputParsed)
+	writeInstruction(*OutputFileName, InputParsed)
 
 }
