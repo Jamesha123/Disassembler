@@ -42,29 +42,34 @@ type Instruction struct {
 func processInput(list []Instruction) {
 
 	for i := 0; i < len(list); i++ {
-		convertToInt(&list[i])
-		opcodeMasking(&list[i])
-		opcodeMatching(&list[i])
-		switch list[i].typeofInstruction {
-		case "R":
-			RTypeFormat(&list[i])
-		case "D":
-			DTypeFormat(&list[i])
-		case "I":
-			ITypeFormat(&list[i])
-		case "B":
-			BTypeFormat(&list[i])
-		case "CB":
-			CBTypeFormat(&list[i])
-		case "IM":
-			IMTypeFormat(&list[i])
-		case "BREAK":
-			Break(&list[i])
-		case "NUM":
+		if !Breaknow {
+			convertToInt(&list[i])
+			opcodeMasking(&list[i])
+			opcodeMatching(&list[i])
+			switch list[i].typeofInstruction {
+			case "R":
+				RTypeFormat(&list[i])
+			case "D":
+				DTypeFormat(&list[i])
+			case "I":
+				ITypeFormat(&list[i])
+			case "B":
+				BTypeFormat(&list[i])
+			case "CB":
+				CBTypeFormat(&list[i])
+			case "IM":
+				IMTypeFormat(&list[i])
+			case "BREAK":
+				Break(&list[i])
+			}
+		} else {
+
+			list[i].typeofInstruction = "NUM"
 			var val uint64
 			val, _ = strconv.ParseUint(list[i].rawInstruction, 2, 32)
 			list[i].bitValue = TwoComplement(val, 32)
 		}
+
 	}
 }
 
@@ -135,7 +140,7 @@ func opcodeMatching(ins *Instruction) {
 	} else if ins.opcode == 1692 {
 		ins.op = "ASR"
 		ins.typeofInstruction = "R"
-	} else if ins.opcode == 0 {
+	} else if ins.opcode == 0 && ins.linevalue == 0 {
 		ins.op = "NOP"
 		ins.typeofInstruction = "NOP"
 	} else if ins.opcode == 1872 {
@@ -145,8 +150,7 @@ func opcodeMatching(ins *Instruction) {
 		ins.op = "Break"
 		ins.typeofInstruction = "BREAK"
 	} else {
-		ins.typeofInstruction = "NUM"
-		fmt.Println("Invalid opcode")
+		//fmt.Println("Error")
 	}
 }
 
@@ -267,7 +271,7 @@ func writeInstruction(filePath string, list []Instruction) {
 				log.Fatal(err)
 			}
 		case "NOP":
-			_, err = fmt.Fprintf(f, "%s %d No Instruction\n", list[i].rawInstruction, list[i].programCnt)
+			_, err = fmt.Fprintf(f, "%s %d %s\n", list[i].rawInstruction, list[i].programCnt, list[i].op)
 			if err != nil {
 				log.Fatal(err)
 			}
