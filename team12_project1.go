@@ -266,7 +266,8 @@ func writeInstruction(filePath string, list []Instruction) {
 				log.Fatal(err)
 			}
 		case "BREAK":
-			_, err = fmt.Fprintf(f, "%s\t%d BREAK\n", formatBreak(list[i].rawInstruction), list[i].programCnt)
+			_, err = fmt.Fprintf(f, "%s %s %s %s %s %s\t%d BREAK\n", list[i].rawInstruction[:8], list[i].rawInstruction[8:11], list[i].rawInstruction[11:16], list[i].rawInstruction[16:21],
+				list[i].rawInstruction[21:26], list[i].rawInstruction[26:], list[i].programCnt)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -369,12 +370,6 @@ func Break(ins *Instruction) {
 	// bits 11 - 32
 	ins.brk = uint32(ins.linevalue & 2031591)
 	Breaknow = true
-}
-
-func formatBreak(s string) string {
-	formattedString := s[:8] + " " + s[8:11] + " " + s[11:16] + " " +
-		s[16:21] + " " + s[21:26] + " " + s[26:]
-	return formattedString
 }
 
 /*
