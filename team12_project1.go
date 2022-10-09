@@ -228,7 +228,7 @@ func writeInstruction(filePath string, list []Instruction) {
 				list[i].rawInstruction[10:22], list[i].rawInstruction[22:27],
 				list[i].rawInstruction[27:32])
 
-			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+			_, err = fmt.Fprintf(f, "\t%d\t%s\t", list[i].programCnt, list[i].op)
 
 			_, err = fmt.Fprintf(f, "R%d, R%d, #%d\n", list[i].rd, list[i].rn, list[i].immediate)
 			if err != nil {
@@ -238,7 +238,7 @@ func writeInstruction(filePath string, list []Instruction) {
 			_, err := fmt.Fprintf(f, "%s %s\t", list[i].rawInstruction[0:6],
 				list[i].rawInstruction[6:32])
 
-			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+			_, err = fmt.Fprintf(f, "\t%d\t%s\t", list[i].programCnt, list[i].op)
 
 			_, err = fmt.Fprintf(f, "#%d\n", list[i].offset)
 			if err != nil {
@@ -248,7 +248,7 @@ func writeInstruction(filePath string, list []Instruction) {
 			_, err := fmt.Fprintf(f, "%s %s %s\t", list[i].rawInstruction[0:8],
 				list[i].rawInstruction[8:27], list[i].rawInstruction[27:32])
 
-			_, err = fmt.Fprintf(f, "%d\t%s\t", list[i].programCnt, list[i].op)
+			_, err = fmt.Fprintf(f, "\t%d\t%s\t", list[i].programCnt, list[i].op)
 
 			_, err = fmt.Fprintf(f, "R%d #%d\n", list[i].conditional, list[i].offset)
 			if err != nil {
@@ -266,17 +266,17 @@ func writeInstruction(filePath string, list []Instruction) {
 				log.Fatal(err)
 			}
 		case "BREAK":
-			_, err = fmt.Fprintf(f, "%s %d Break\n", list[i].rawInstruction, list[i].programCnt)
+			_, err = fmt.Fprintf(f, "%s\t\t%d BREAK\n", list[i].rawInstruction, list[i].programCnt)
 			if err != nil {
 				log.Fatal(err)
 			}
 		case "NOP":
-			_, err = fmt.Fprintf(f, "%s %d %s\n", list[i].rawInstruction, list[i].programCnt, list[i].op)
+			_, err = fmt.Fprintf(f, "%s \t\t%d %s\n", list[i].rawInstruction, list[i].programCnt, list[i].op)
 			if err != nil {
 				log.Fatal(err)
 			}
 		case "NUM":
-			_, err = fmt.Fprintf(f, "%s %d %d\n", list[i].rawInstruction, list[i].programCnt, list[i].bitValue)
+			_, err = fmt.Fprintf(f, "%s \t\t%d %d\n", list[i].rawInstruction, list[i].programCnt, list[i].bitValue)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -385,7 +385,7 @@ var OutputFileName *string
 func main() {
 
 	InputFileName := flag.String("i", "dtest2_bin.txt", "Gets the input file name")
-	OutputFileName := flag.String("o", "team12_addtest1_out.dis.txt", "Gets the output file name")
+	OutputFileName := flag.String("o", "team12_out_dis.txt", "Gets the output file name")
 
 	flag.Parse()
 
