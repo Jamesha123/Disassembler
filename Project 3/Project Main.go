@@ -31,7 +31,7 @@ type Instruction struct {
 
 func main() {
 
-	//InputFileName := flag.String("i", "input.txt", "Gets the input file name")
+	//InputFileName := flag.String("i", "dtest2_bin.txt", "Gets the input file name")
 	OutputFileName := flag.String("o", "team12_out", "Gets the output file name")
 
 	flag.Parse()

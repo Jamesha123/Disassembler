@@ -1,12 +1,42 @@
 ====================
 cycle:1	96		ADD R3, R1, R2
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	0	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -14,12 +44,42 @@ data:
 ====================
 cycle:2	100		SUB R3, R1, R2
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	0	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -27,12 +87,42 @@ data:
 ====================
 cycle:3	104		AND R3, R1, R2
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	0	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -40,6 +130,22 @@ data:
 ====================
 cycle:4	108		ORR R3, R1, R2
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	0	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
@@ -47,11 +153,41 @@ r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
 
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
 
 ====================
 cycle:5	112		ADDI R1, R2, #400
+
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
 
 Register:
 r00:	0	400	0	0	0	0	0	0
@@ -60,11 +196,41 @@ r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
 
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
 
 ====================
 cycle:6	116		SUBI R1, R2, #400
+
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
 
 Register:
 r00:	0	-400	0	0	0	0	0	0
@@ -72,6 +238,20 @@ r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -79,6 +259,22 @@ data:
 ====================
 cycle:7	120		STUR R1, [R2,#100]
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	-400	0	0	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
@@ -86,11 +282,41 @@ r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
 
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
 
 ====================
 cycle:8	124		LDUR R3, [R2,#100]
+
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
 
 Register:
 r00:	0	-400	0	-400	0	0	0	0
@@ -98,6 +324,20 @@ r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -105,12 +345,42 @@ data:
 ====================
 cycle:9	128		CBZ R1 #3
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	-400	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -118,6 +388,22 @@ data:
 ====================
 cycle:10	132		CBNZ R19 #3
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	-400	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
@@ -125,11 +411,41 @@ r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
 
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
 
 ====================
 cycle:11	136		MOVZ R1, 255, LSL 0
+
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
 
 Register:
 r00:	0	0	0	-400	0	0	0	0
@@ -137,6 +453,20 @@ r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -144,12 +474,42 @@ data:
 ====================
 cycle:12	140		MOVK R2, 65280, LSL 3
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -157,12 +517,42 @@ data:
 ====================
 cycle:13	144		LSR R0, R1, #4
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -170,12 +560,42 @@ data:
 ====================
 cycle:14	148		LSL R0, R1, #4
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
@@ -183,12 +603,42 @@ data:
 ====================
 cycle:15	152		NOP
 
+Pre-Issu Buffer:
+
+        Entry 0: 
+
+        Entry 1: 
+
+        Entry 2: 
+
+        Entry 3: 
+
+Pre_ALU Queue:
+
+        Entry 0: 
+
+        Entry 1: 
+
 Register:
 r00:	0	0	0	-400	0	0	0	0
 r08:	0	0	0	0	0	0	0	0
 r16:	0	0	0	0	0	0	0	0
 r24:	0	0	0	0	0	0	0	0
 
+
+cache:
+Set 0: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 1: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 2: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
+Set 3: LRU=0
+	Entry 0:	[(0, 0, 0)<0,0>]
+	Entry 1:	[(0, 0, 0)<0,0>]
 
 data:
 160:-1	-2	-3	0	1	2	42	2147483647	
