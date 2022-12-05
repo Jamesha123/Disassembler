@@ -132,30 +132,29 @@ func SimulateCycle() {
 	}
 
 	if len(PreALUBuff) != 0 {
-		insIndex := <-PreALUBuff
-		var AluOut = [2]int{insIndex, ALUCall(InputParsed[insIndex])}
-		postALUBuff <- AluOut
+		listIndex := <-PreALUBuff
+		var ALUOut = [2]int{listIndex, ALUCall(InputParsed[listIndex])}
+		postALUBuff <- ALUOut
 	}
 
 	if len(PreMemBuff) != 0 {
-		insIndex := <-PreMemBuff
+		listIndex := <-PreMemBuff
 		//check for cache hit
-		cacheHit, _ := CheckCacheHit(Register[InputParsed[insIndex].rn] + int(InputParsed[insIndex].address)*4)
+		cacheHit, _ := CheckCacheHit(Register[InputParsed[listIndex].rn] + int(InputParsed[listIndex].address)*4)
 		if cacheHit {
-			//proceed as expected
-			var MemOut = [2]int{insIndex, MEM(InputParsed[insIndex])}
+			var MemOut = [2]int{listIndex, MEM(InputParsed[listIndex])}
 			if MemOut[1] != -1 {
 				postMemBuff <- MemOut
 			}
 		} else {
-			//change MEM and cache
-			MEM(InputParsed[insIndex])
-			//put insIndex back in preMemBuff queue in correct order
+			// change MEM and cache
+			MEM(InputParsed[listIndex])
+			// put Index back in buffer
 			if len(PreMemBuff) == 0 {
-				PreMemBuff <- insIndex
+				PreMemBuff <- listIndex
 			} else if len(PreMemBuff) == 1 {
 				tempInt := <-PreMemBuff
-				PreMemBuff <- insIndex
+				PreMemBuff <- listIndex
 				PreMemBuff <- tempInt
 			}
 		}
