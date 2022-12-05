@@ -195,22 +195,25 @@ func writeSimulator(filePath string, list []Instruction) {
 	line := "===================="
 	cycleLabel := "cycle:"
 	registersLabel := "Register:"
-	dataLabel := "data:"
-	cacheLabel := "cache:"
+	dataLabel := "Data:"
+	cacheLabel := "Cache:"
 	preIssueLabel := "Pre-Issu Buffer:"
 	preALULabel := "Pre_ALU Queue:"
-	//postALULabel := "Post_ALU Queue:"
-	//preMEMLabel := "Pre_MEM Queue:"
-	//postMEMLabel := "Post_MEM Queue:"
+	postALULabel := "Post_ALU Queue:"
+	preMEMLabel := "Pre_MEM Queue:"
+	postMEMLabel := "Post_MEM Queue:"
 	entryZeroLabel := "        Entry 0: "
 	entryOneLabel := "        Entry 1: "
 	entryTwoLabel := "        Entry 2: "
 	entryThreeLabel := "        Entry 3: "
+	helloWorld := "hello world!"
 	//fmt.Println(PCIndex)
 	//fmt.Println(BreakPoint)
 
 	for PCIndex < BreakPoint {
+		// prints "--------------------"
 		_, err := fmt.Fprintf(f, "%s\n", line)
+
 		switch list[PCIndex].typeofInstruction {
 		case "R":
 			_, err = fmt.Fprintf(f, "%s%d\t%d\t\t%s R%d, R%d, ", cycleLabel, cycle, list[PCIndex].programCnt, list[PCIndex].op, list[PCIndex].rd, list[PCIndex].rn)
@@ -238,6 +241,7 @@ func writeSimulator(filePath string, list []Instruction) {
 		ExecuteInstruction(list[PCIndex])
 
 		// making test output layout
+		_, err = fmt.Fprintf(f, "\n%s\n", helloWorld)
 		// prints "Pre-Issue Buffer:"
 		_, err = fmt.Fprintf(f, "\n%s\n", preIssueLabel)
 		//prints out "Entry 0: - Entry 3:"
@@ -252,10 +256,23 @@ func writeSimulator(filePath string, list []Instruction) {
 		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
 		_, err = fmt.Fprintf(f, "\n%s\n", entryOneLabel)
 
-		//prints out "Post_ALU Queue:"
+		// prints out "Post_ALU Queue:"
+		_, err = fmt.Fprintf(f, "\n%s\n", postALULabel)
+		// prints out "Entry0:"
+		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
 
-		//
+		// prints out "Pre_MEM Queue:"
+		_, err = fmt.Fprintf(f, "\n%s\n", preMEMLabel)
+		// prints out "Entry0: - Entry1:"
+		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
+		_, err = fmt.Fprintf(f, "\n%s\n", entryOneLabel)
 
+		// prints out "Post_MEM Queue:"
+		_, err = fmt.Fprintf(f, "\n%s\n", postMEMLabel)
+		// prints out "Entry0:"
+		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
+
+		// prints out "Registers"
 		_, err = fmt.Fprintf(f, "\n%s\n", registersLabel)
 
 		_, err = fmt.Fprintf(f, "r00:\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", Register[0], Register[1], Register[2], Register[3],
@@ -266,7 +283,13 @@ func writeSimulator(filePath string, list []Instruction) {
 			Register[20], Register[21], Register[22], Register[23])
 		_, err = fmt.Fprintf(f, "r24:\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n\n", Register[24], Register[25], Register[26], Register[27],
 			Register[28], Register[29], Register[30], Register[31])
+
+		//prints out "Cache"
 		_, err = fmt.Fprintf(f, "\n%s\n", cacheLabel)
+
+		//prints out "Set i: LRU=LRUBits[i]"
+		//			          "Entry j: [(CacheSets[i][j].valid, CacheSets[i][j].dirty,CacheSets[i][j].tag"
+		//					  "<strconv.FormatInt(int64(CacheSets[i][j].word1), 2), strconv.FormatInt(int64(CacheSets[i][j].word2), 2)>"
 		for i := 0; i < 4; i++ {
 			_, err = fmt.Fprintf(f, "Set %d: LRU=%d\n", i, LRUBits[i])
 			for j := 0; j < 2; j++ {
