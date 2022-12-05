@@ -12,7 +12,7 @@ var CacheSets [4][2]Block
 var LRUbits = [4]int{0, 0, 0, 0}
 
 func WriteMem(address int, value int) {
-
+	
 }
 
 func LoadMem(address int) {

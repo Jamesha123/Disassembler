@@ -186,7 +186,17 @@ func writeSimulator(filePath string, list []Instruction) {
 	line := "===================="
 	cycleLabel := "cycle:"
 	registersLabel := "Register:"
-	dataLabel := "data:"
+	dataLabel := "Data"
+	cacheLabel := "cache:"
+	preIssueLabel := "Pre-Issu Buffer:"
+	preALULabel := "Pre_ALU Queue:"
+	postALULabel := "Post_ALU Queue:"
+	preMEMLabel := "Pre_MEM Queue:"
+	postMEMLabel := "Post_MEM Queue:"
+	entryZeroLabel := "        Entry 0: "
+	entryOneLabel := "        Entry 1: "
+	entryTwoLabel := "        Entry 2: "
+	entryThreeLabel := "        Entry 3: "
 	//fmt.Println(PCIndex)
 	//fmt.Println(BreakPoint)
 
@@ -218,6 +228,26 @@ func writeSimulator(filePath string, list []Instruction) {
 
 		ExecuteInstruction(list[PCIndex])
 
+		// making test output layout
+		// prints "Pre-Issue Buffer:"
+		_, err = fmt.Fprintf(f, "\n%s\n", preIssueLabel)
+		//prints out "Entry 0: - Entry 3:"
+		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
+		_, err = fmt.Fprintf(f, "\n%s\n", entryOneLabel)
+		_, err = fmt.Fprintf(f, "\n%s\n", entryTwoLabel)
+		_, err = fmt.Fprintf(f, "\n%s\n", entryThreeLabel)
+
+		// prints out "Pre_ALU Queue:"
+		_, err = fmt.Fprintf(f, "\n%s\n", preALULabel)
+		// prints out "Entry0: - Entry1:"
+		_, err = fmt.Fprintf(f, "\n%s\n", entryZeroLabel)
+		_, err = fmt.Fprintf(f, "\n%s\n", entryOneLabel)
+
+		//prints out "Post_ALU Queue:"
+
+		//
+
+		// prints out "Registers"
 		_, err = fmt.Fprintf(f, "\n%s\n", registersLabel)
 
 		_, err = fmt.Fprintf(f, "r00:\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", Register[0], Register[1], Register[2], Register[3], Register[4], Register[5], Register[6], Register[7])
