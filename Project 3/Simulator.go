@@ -12,6 +12,27 @@ type Snapshot struct {
 	PC    int
 }
 
+// variables
+var Register [32]int
+var BreakPoint int
+var PCIndex = 0
+var Data [][]int
+var SturData [][]int
+var InputParsed []Instruction
+var SnapshotArray []Snapshot
+var Breaknow bool = false
+var InputFileName *string
+var OutputFileName *string
+var OutputFileName2 *string
+var PC = 96
+var MemoryIndex = make(map[int]int)
+var PreIssueBuff = make(chan int, 4)
+var PreMemBuff = make(chan int, 2)
+var PreALUBuff = make(chan int, 2)
+var postMemBuff = make(chan [2]int, 1)
+var postALUBuff = make(chan [2]int, 1)
+var cycleNum = 0
+
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 func initializeRegisters(list []Instruction) {
 	round := 1
@@ -68,7 +89,7 @@ func ExecuteInstruction(list Instruction) {
 		counter := Register[list.rn] + int(list.address) // + address = 100
 		inSlice = counterInSlice(counter, SturData)
 		if !inSlice {
-			MemoryIndex[Register[list.rn]+int(list.address)*4] = int64(Register[list.rt])
+			MemoryIndex[Register[list.rn]+int(list.address)*4] = Register[list.rt]
 			// value := Register[list.rt]
 			// temp := []int{counter, value}
 			// SturData = append(SturData, temp)
@@ -96,6 +117,60 @@ func ExecuteInstruction(list Instruction) {
 		}
 	case "NOP":
 		break
+	}
+}
+
+func SimulateCycle() {
+	//Write back with both postALUBuff and postMemBuff
+	if len(postALUBuff) != 0 {
+		buff := <-postALUBuff
+		WriteBack(InputParsed[buff[1]], buff[0])
+	}
+	if len(postMemBuff) != 0 {
+		buff := <-postMemBuff
+		WriteBack(InputParsed[buff[1]], buff[0])
+	}
+
+	if len(PreALUBuff) != 0 {
+		insIndex := <-PreALUBuff
+		var AluOut = [2]int{insIndex, ALUCall(InputParsed[insIndex])}
+		postALUBuff <- AluOut
+	}
+
+	if len(PreMemBuff) != 0 {
+		insIndex := <-PreMemBuff
+		//check for cache hit
+		cacheHit, _ := CheckCacheHit(Register[InputParsed[insIndex].rn] + int(InputParsed[insIndex].address)*4)
+		if cacheHit {
+			//proceed as expected
+			var MemOut = [2]int{insIndex, MEM(InputParsed[insIndex])}
+			if MemOut[1] != -1 {
+				postMemBuff <- MemOut
+			}
+		} else {
+			//change MEM and cache
+			MEM(InputParsed[insIndex])
+			//put insIndex back in preMemBuff queue in correct order
+			if len(PreMemBuff) == 0 {
+				PreMemBuff <- insIndex
+			} else if len(PreMemBuff) == 1 {
+				tempInt := <-PreMemBuff
+				PreMemBuff <- insIndex
+				PreMemBuff <- tempInt
+			}
+		}
+	}
+
+	if !Breaknow {
+		for i := 0; i < 2; i++ {
+			if Fetch() {
+				break
+			}
+		}
+	}
+
+	if len(PreIssueBuff) != 0 {
+		// Issue()
 	}
 }
 
@@ -223,6 +298,11 @@ func writeSimulator(filePath string, list []Instruction) {
 		PCIndex++
 		cycle++
 	}
+
+	for len(postALUBuff) != 0 || len(postMemBuff) != 0 || len(PreALUBuff) != 0 || len(PreMemBuff) != 0 {
+		SimulateCycle()
+		cycleNum++
+	}
 }
 
 func counterInSlice(c int, slice [][]int) bool {
@@ -233,24 +313,3 @@ func counterInSlice(c int, slice [][]int) bool {
 	}
 	return false
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-********************************************
-//  main
-********************************************
-*/
-
-var Register [32]int
-var BreakPoint int
-var PCIndex = 0
-var Data [][]int
-var SturData [][]int
-var InputParsed []Instruction
-var SnapshotArray []Snapshot
-var Breaknow bool = false
-var InputFileName *string
-var OutputFileName *string
-var OutputFileName2 *string
-var PC = 96
-var MemoryIndex = make(map[int]int64)

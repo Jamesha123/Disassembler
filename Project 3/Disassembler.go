@@ -44,7 +44,7 @@ func processInput(list []Instruction) {
 			list[i].typeofInstruction = "NUM"
 			var val uint64
 			val, _ = strconv.ParseUint(list[i].rawInstruction, 2, 32)
-			list[i].bitValue = TwoComplement(val, 32)
+			list[i].bitValue = int(TwoComplement(val, 32))
 
 			counter := list[i].programCnt
 			value := int(list[i].bitValue)

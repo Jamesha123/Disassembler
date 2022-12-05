@@ -26,17 +26,17 @@ type Instruction struct {
 	shiftCode         uint8
 	field             uint32
 	brk               uint32
-	bitValue          int64
+	bitValue          int
 }
 
 func main() {
 
-	InputFileName := flag.String("i", "input.txt", "Gets the input file name")
+	//InputFileName := flag.String("i", "input.txt", "Gets the input file name")
 	OutputFileName := flag.String("o", "team12_out", "Gets the output file name")
 
 	flag.Parse()
 
-	readInstruction(*InputFileName)
+	readInstruction("dtest2_bin.txt")
 	processInput(InputParsed)
 	initializeRegisters(InputParsed)
 	ProcessSnapshot(InputParsed)
