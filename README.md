@@ -1,4 +1,4 @@
-# CS3339 Project 3 - ARM Processor Disassembler and Simulator
+# CS3339 Project - ARM Processor Disassembler and Simulator
 
 ## Team 12
 
